@@ -38,7 +38,7 @@ acct.printEmployeeInformation();
 // acctCopy.describe();
 
 class Department2 {
-    private employees: string[] = [];
+    protected employees: string[] = [];
 
     constructor(private readonly id: string, public name: string) {
     }
@@ -90,3 +90,31 @@ const acct2 = new AccountingDepartment('d3', []);
 
 acct2.addReport('Something went Wrong');
 acct2.printReports();
+
+//Protected Modifier
+class HRDepartment extends Department2 {
+    constructor(id: string, private reports: string[]) {
+        super(id, 'IT');
+    }
+
+    addEmployee(name: string): void {
+        if (name === 'Max') {
+            console.log("No Max's allowed!");
+            return;
+        }
+        this.employees.push(name);
+    }
+
+    addReport(report: string) {
+        this.reports.push(report);
+    }
+
+    printReports() {
+        console.log(this.reports);
+    }
+}
+
+const hrDept = new HRDepartment('d3', []);
+hrDept.addEmployee('Max');
+hrDept.addEmployee('Jimmy');
+hrDept.printEmployeeInformation();
