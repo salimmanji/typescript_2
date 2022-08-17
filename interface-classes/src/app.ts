@@ -40,7 +40,7 @@ acct.printEmployeeInformation();
 class Department2 {
     private employees: string[] = [];
 
-    constructor(private id: string, public name: string) {
+    constructor(private readonly id: string, public name: string) {
     }
 
     describe(this: Department2) {
@@ -59,3 +59,34 @@ class Department2 {
 
 const marketing = new Department2('d1', 'Marketing');
 marketing.describe();
+
+class ITDepartment extends Department2 {
+    admins: string[];
+    constructor(id: string, admins: string[]) {
+        super(id, 'IT');
+        this.admins = admins;
+    }
+}
+
+const ITdept = new ITDepartment('d2', ['Max']);
+console.log(ITdept);
+
+//Shorthand
+class AccountingDepartment extends Department2 {
+    constructor(id: string, private reports: string[]) {
+        super(id, 'IT');
+    }
+
+    addReport(report: string) {
+        this.reports.push(report);
+    }
+
+    printReports() {
+        console.log(this.reports);
+    }
+}
+
+const acct2 = new AccountingDepartment('d3', []);
+
+acct2.addReport('Something went Wrong');
+acct2.printReports();
