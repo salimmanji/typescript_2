@@ -103,15 +103,9 @@ class HRDepartment extends Department2 {
             return;
         }
         this.employees.push(name);
-    }
-
-    addReport(report: string) {
-        this.reports.push(report);
-    }
-
-    printReports() {
         console.log(this.reports);
     }
+
 }
 
 const hrDept = new HRDepartment('d3', []);
@@ -163,7 +157,50 @@ class CEODepartment extends Department2 {
 const ceo = new CEODepartment('d4', []);
 ceo.addReport('abc');
 console.log(ceo.mostRecentReport);
-ceo.mostRecentReport = '';
-console.log(ceo.mostRecentReport);
+// ceo.mostRecentReport = '';
+// console.log(ceo.mostRecentReport);
 ceo.mostRecentReport = 'now this is the most recent report';
 console.log(ceo.mostRecentReport);
+
+// static properties and methods
+abstract class Department3 {
+    protected employees: string[] = [];
+    static fiscalYear = 2020;
+
+    constructor(protected readonly id: string, public name: string[]) {
+    }
+
+    static createEmployee(name: string) {
+        return {name: name};
+    }
+
+    abstract describe(this: Department3): void;
+
+    addEmployee(employee: string) {
+        this.employees.push(employee);
+    }
+
+    printEmployeeInformation() {
+        console.log(this.employees.length);
+        console.log(this.employees);
+    }
+}
+
+const emp1 = Department3.createEmployee('Peter');
+console.log(emp1);
+console.log(Department3.fiscalYear);
+
+//Abstract Classes
+class SalesDepartment extends Department3{
+    constructor(id: string, public name: string[]) {
+        super(id, ['Sales']);
+    }
+
+    describe() {
+        console.log(`Sales Dept - ID: ${this.id}`);
+    }
+}
+
+const sales = new SalesDepartment('d6', []);
+sales.describe();
+
