@@ -118,3 +118,52 @@ const hrDept = new HRDepartment('d3', []);
 hrDept.addEmployee('Max');
 hrDept.addEmployee('Jimmy');
 hrDept.printEmployeeInformation();
+
+//Getters and Setters
+class CEODepartment extends Department2 {
+    private lastReport: string;
+
+    get mostRecentReport() {
+        if (this.lastReport) {
+            return this.lastReport;
+        }
+        throw new Error('No Report Found');
+    }
+    
+    set mostRecentReport(value: string) {
+        if (!value) {
+            throw new Error('Please pass in a valid value!');
+        }
+        this.addReport(value);
+    }
+
+    constructor(id: string, private reports: string[]) {
+        super(id, 'IT');
+        this.lastReport = reports[0];
+    }
+
+    addEmployee(name: string): void {
+        if (name === 'Max') {
+            console.log("No Max's allowed!");
+            return;
+        }
+        this.employees.push(name);
+    }
+
+    addReport(report: string) {
+        this.reports.push(report);
+        this.lastReport = report;
+    }
+
+    printReports() {
+        console.log(this.reports);
+    }
+}
+
+const ceo = new CEODepartment('d4', []);
+ceo.addReport('abc');
+console.log(ceo.mostRecentReport);
+ceo.mostRecentReport = '';
+console.log(ceo.mostRecentReport);
+ceo.mostRecentReport = 'now this is the most recent report';
+console.log(ceo.mostRecentReport);
