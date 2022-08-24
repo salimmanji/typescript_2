@@ -1,8 +1,10 @@
+// import Cmp from "./base-component.js"; // Default export, see line 7
 import { Component } from "./base-component.js";
-import { Validatable, validate } from "../util/validation.js";
+import * as Validation from "../util/validation.js";
 import { autobind } from "../decorators/autobind.js";
 import { projectState } from "../state/project-state.js";
 
+//export class ProjectInput extends Cmp<HTMLDivElement, HTMLFormElement> {
 export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
   titleInputElement: HTMLInputElement;
   descriptionInputElement: HTMLInputElement;
@@ -34,16 +36,16 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     const userDescription = this.descriptionInputElement.value;
     const userPeople = this.peopleInputElement.value;
 
-    const titleValidatable: Validatable = {
+    const titleValidatable: Validation.Validatable = {
       value: userTitle,
       required: true,
     };
-    const descValidatable: Validatable = {
+    const descValidatable: Validation.Validatable = {
       value: userDescription,
       required: true,
       minLength: 5,
     };
-    const peopleValidatable: Validatable = {
+    const peopleValidatable: Validation.Validatable = {
       value: +userPeople, // convert to number
       required: true,
       min: 1,
@@ -51,9 +53,9 @@ export class ProjectInput extends Component<HTMLDivElement, HTMLFormElement> {
     };
 
     if (
-      !validate(titleValidatable) ||
-      !validate(descValidatable) ||
-      !validate(peopleValidatable)
+      !Validation.validate(titleValidatable) ||
+      !Validation.validate(descValidatable) ||
+      !Validation.validate(peopleValidatable)
     ) {
       alert("Invalid input, please try again");
       return;
